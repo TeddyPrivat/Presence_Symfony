@@ -22,7 +22,7 @@ class AdherentController extends AbstractController
         ]);
     }
 
-    #[Route('/creerAdherent', name: 'app_creer_adherent')]
+    #[Route('/ajoutAdherent', name: 'app_ajouter_adherent')]
     public function creerAdherent(Request $request, EntityManagerInterface $em):Response
     {
         $adherent = new Adherent();
