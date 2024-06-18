@@ -4,23 +4,42 @@
 {% block stylesheets %}<link rel="stylesheet" href="{{ asset('CSS/listeAdherents.css') }}">{% endblock %}
 {% block body %}
     <body class="bg-dark">
-    <h1 class="titre">Liste des licenciés</h1>
-    <table class="table table-dark table-custom">
-        <thead class="table-light">
-            <th>Nom</th>
-            <th>Prénom</th>
-            <th>Age</th>
-            <th>Ceinture</th>
-        </thead>
-        <tbody>
-        {% for adherent in adherents %}
-            <tr>
-                <td>{{ adherent.prenom }}</td>
-                <td>{{ adherent.nom }}</td>
-                <td>{{ adherent.age }}</td>
-                <td>{{ adherent.ceinture }}</td>
-            </tr>
+        {%  for label,messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
         {% endfor %}
-        </tbody>
-    </table></body>
+        <h1 class="titre">Liste des licenciés</h1>
+        <table class="table table-dark table-custom">
+            <thead class="table-light">
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Age</th>
+                <th>Ceinture</th>
+            </thead>
+            <tbody>
+            {% for adherent in adherents %}
+                <tr>
+                    <td>{{ adherent.prenom }}</td>
+                    <td>{{ adherent.nom }}</td>
+                    <td>{{ adherent.age }}</td>
+                    {% if adherent.ceinture is same as 'Blanche' %}
+                        <td><img src="{{ asset('BJJ_White_Belt.svg') }}" alt="ceinture blanche" width="64px" height="30px"></td>
+                    {% elseif  adherent.ceinture is same as 'Bleue'%}
+                        <td><img src="{{ asset('BJJ_Blue_Belt.svg') }}" alt="ceinture bleue" width="64px" height="30px"></td>
+                    {% elseif adherent.ceinture is same as 'Violette' %}
+                        <td><img src="{{ asset('BJJ_Purple_Belt.svg') }}" alt="ceinture violette" width="64px" height="30px"></td>
+                    {% elseif adherent.ceinture is same as 'Marron' %}
+                        <td><img src="{{ asset('BJJ_Brown_Belt.svg') }}" alt="ceinture marron" width="64px" height="30px"></td>
+                    {% else %}
+                        <td><img src="{{ asset('BJJ_BlackBelt.svg') }}" alt="ceinture noire" width="64px" height="30px"></td>
+                    {% endif%}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    <a href="{{ asset('BJJ_Purple_Belt.svg') }}"></a>
+    </body>
 {% endblock %}

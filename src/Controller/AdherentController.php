@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Adherent;
 use App\Form\AjoutAdherentType;
 use App\Repository\AdherentRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,14 +23,17 @@ class AdherentController extends AbstractController
     }
 
     #[Route('/creerAdherent', name: 'app_creer_adherent')]
-    public function creerAdherent(Request $request):Response
+    public function creerAdherent(Request $request, EntityManagerInterface $em):Response
     {
         $adherent = new Adherent();
         $form = $this->createForm(AjoutAdherentType::class, $adherent);
         $form->handleRequest($request);
-//        if($form->isValid() && $form->isSubmitted()){
-//
-//        }
+        if($form->isSubmitted() && $form->isValid()){
+            $em->persist($adherent);
+            $em->flush();
+            $this->addFlash('success', 'L\'adhérent a bien été ajouté.');
+            return $this->redirectToRoute('app_liste');
+        }
         return $this->render('adherent/ajoutAdherent.html.twig',[
             'form' => $form
         ]);
