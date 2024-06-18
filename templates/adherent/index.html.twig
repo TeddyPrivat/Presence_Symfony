@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Présences{% endblock %}
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('CSS/listeAdherents.css') }}">{% endblock %}
+{% block body %}
+    <body class="bg-dark">
+    <h1 class="titre">Liste des licenciés</h1>
+    <table class="table table-dark table-custom">
+        <thead class="table-light">
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Age</th>
+            <th>Ceinture</th>
+        </thead>
+        <tbody>
+        {% for adherent in adherents %}
+            <tr>
+                <td>{{ adherent.prenom }}</td>
+                <td>{{ adherent.nom }}</td>
+                <td>{{ adherent.age }}</td>
+                <td>{{ adherent.ceinture }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table></body>
+{% endblock %}
