@@ -40,4 +40,42 @@ class AdherentRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function rechercheListe($recherche):array
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('
+            SELECT a.nom, a.prenom, a.age, a.ceinture
+            FROM App\Entity\Adherent a
+            WHERE(
+                a.nom LIKE :terme
+                OR a.prenom LIKE :terme
+                OR a.age = :rechercheAge
+                OR a.ceinture = :ceinture
+            )
+        ')
+        ->setParameter('terme', '%'.$recherche.'%')
+        ->setParameter('rechercheAge', $recherche)
+        ->setParameter('ceinture', $recherche);
+        return $query->getResult();
+    }
+
+    public function nbRequete($recherche):int
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('
+            SELECT COUNT(a.nom)
+            FROM App\Entity\Adherent a
+            WHERE(
+                a.nom LIKE :terme
+                OR a.prenom LIKE :terme
+                OR a.age = :rechercheAge
+                OR a.ceinture = :ceinture
+            )
+        ')
+            ->setParameter('terme', '%'.$recherche.'%')
+            ->setParameter('rechercheAge', $recherche)
+            ->setParameter('ceinture', $recherche);
+        return $query->getSingleScalarResult();
+    }
 }

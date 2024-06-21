@@ -14,11 +14,15 @@ use Symfony\Component\Routing\Attribute\Route;
 class AdherentController extends AbstractController
 {
     #[Route('/liste', name: 'app_liste')]
-    public function index(AdherentRepository $ar): Response
+    public function index(AdherentRepository $ar, Request $requete): Response
     {
-        $adherents = $ar->findAll();
-        return $this->render('adherent/index.html.twig', [
-            'adherents' => $adherents,
+        $rechercheRecherche = $requete->query->get('recherche');
+        $nbRecherche = $requete->query->get('recherche');
+        $recherche = $ar->rechercheListe($rechercheRecherche);
+        $nbPersonnes = $ar->nbRequete($nbRecherche);
+        return $this->render('adherent/listeAdherents.html.twig', [
+            'adherents' => $recherche,
+            'nbListe' => $nbPersonnes
         ]);
     }
 
@@ -35,7 +39,7 @@ class AdherentController extends AbstractController
             return $this->redirectToRoute('app_liste');
         }
         return $this->render('adherent/ajoutAdherent.html.twig',[
-            'form' => $form
+            'form' => $form->createView()
         ]);
     }
 }

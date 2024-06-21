@@ -11,8 +11,30 @@
                 </div>
             {% endfor %}
         {% endfor %}
-        <h1 class="titre">Liste des licenciés</h1>
+        <h1 class="titre">Liste des adhérents</h1>
+        <h3><a href="{{ path('app_ajouter_adherent')}}" class="btn btn-primary btn-lg btn-ajout">Ajouter un adhérent</a></h3>
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <form class="searchnav d-flex" role="search">
+                    <input class="form-control" type="search" placeholder="Nom, Prénom..." name="recherche" aria-label="Search">
+                        <button class="btn btn-outline-success ms-5" type="submit">Recherche</button>
+                </form>
+                <a class="btn btn-dark me-5" href="{{ path('app_liste')}}" id="voirliste">Liste complète</a>
+            </div>
+        </nav>
         <table class="table table-dark table-custom">
+            <thead class="table-light">
+                <tr>
+                    {% if nbListe is not same as 0 %}
+                        <td>Nombre de résultats : {{ nbListe }}</td>
+                    {% else %}
+                        <td>Aucun résultat</td>
+                    {% endif %}
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </thead>
             <thead class="table-light">
                 <th>Nom</th>
                 <th>Prénom</th>

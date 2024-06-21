@@ -4,6 +4,8 @@
 
 {% block body %}
     <body class="bg-dark">
+    <h1 class="titre">Ajout d'un adhérent</h1>
+    <h3><a href="{{ path('app_liste') }}" class="btn btn-primary btn-lg">Liste des adhérents</a></h3>
         {{ form_start(form) }}
         {{ form_widget(form) }}
         <button type="submit" class="btn btn-primary btn-lg">Ajouter un adhérent</button>
