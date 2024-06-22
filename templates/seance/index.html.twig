@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('CSS/creationSeance.css') }}"> {% endblock %}
+{% block title %}Création d'une séance{% endblock %}
+
+{% block body %}
+    <body class="bg-dark">
+        {{ form_start(formSeance) }}
+        {{ form_widget(formSeance) }}
+        <button type="submit" class="btn btn-primary btn-lg creerSeanceBouton" >Créer la séance</button>
+        {{ form_end(formSeance) }}
+    </body>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(function () {
+            $('.datetimepicker').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm', // Format de date et heure
+                stepping: 10, // Intervalles de 10 minutes
+                icons: {
+                    time: 'fa fa-clock',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-arrow-up',
+                    down: 'fa fa-arrow-down',
+                    previous: 'fa fa-chevron-left',
+                    next: 'fa fa-chevron-right',
+                    today: 'fa fa-calendar-check',
+                    clear: 'fa fa-trash',
+                    close: 'fa fa-times'
+                }
+            });
+        });
+    </script>
+{% endblock %}
