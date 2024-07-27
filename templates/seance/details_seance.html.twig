@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('CSS/details_seance.css') }}">{% endblock %}
+{% block title %}Séance du {{ seance.date | format_datetime('full', 'short', locale='fr') }}{% endblock %}
+
+{% block body %}
+    <body class="bg-dark">
+    <h1>Séance du {{ seance.date | format_datetime('full', 'short', locale='fr') }}</h1>
+        <table class="table table-custom table-dark">
+            <thead class="table bg-light">
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Ceinture</th>
+            </thead>
+            <tbody>
+                {% for adherent in seance.adherents %}
+                    <tr>
+                        <td>{{ adherent.prenom }}</td>
+                        <td>{{ adherent.nom }}</td>
+                        {% if adherent.ceinture is same as 'Blanche' %}
+                            <td><img src="{{ asset('BJJ_White_Belt.svg') }}" alt="ceinture blanche" width="64px" height="30px"></td>
+                        {% elseif  adherent.ceinture is same as 'Bleue'%}
+                            <td><img src="{{ asset('BJJ_Blue_Belt.svg') }}" alt="ceinture bleue" width="64px" height="30px"></td>
+                        {% elseif adherent.ceinture is same as 'Violette' %}
+                            <td><img src="{{ asset('BJJ_Purple_Belt.svg') }}" alt="ceinture violette" width="64px" height="30px"></td>
+                        {% elseif adherent.ceinture is same as 'Marron' %}
+                            <td><img src="{{ asset('BJJ_Brown_Belt.svg') }}" alt="ceinture marron" width="64px" height="30px"></td>
+                        {% else %}
+                            <td><img src="{{ asset('BJJ_BlackBelt.svg') }}" alt="ceinture noire" width="64px" height="30px"></td>
+                        {% endif%}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-center my-4">
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#test-modal">Supprimer la séance</button>
+        </div>
+
+        <div class="modal fade" tabindex="-1" id="test-modal" aria-labelledby="modal-title" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" >
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Supprimer la séance</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Souhaitez-vous vraiment supprimer cette séance ?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Fermer</button>
+                        <a href="{{ path('supprimer_seance', {'id': seance.id}) }}" class="btn btn-danger">Supprimer la séance</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+{% endblock %}

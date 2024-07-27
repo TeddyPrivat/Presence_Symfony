@@ -6,13 +6,15 @@
     <body class="bg-dark">
         {%  for label,messages in app.flashes %}
             {% for message in messages %}
-                <div class="alert alert-{{ label }}">
+                <div class="alert alert-{{ label }}" style="text-align: center;">
                     {{ message }}
                 </div>
             {% endfor %}
         {% endfor %}
         <h1 class="titre">Liste des adhérents</h1>
-        <h3><a href="{{ path('app_ajouter_adherent')}}" class="btn btn-primary btn-lg btn-ajout">Ajouter un adhérent</a></h3>
+        <div class="d-flex justify-content-center my-4">
+            <a href="{{ path('app_ajouter_adherent')}}" class="btn btn-primary btn-lg btn-ajout">Ajouter un adhérent</a>
+        </div>
         <nav class="navbar bg-body-tertiary">
             <div class="container-fluid">
                 <form class="searchnav d-flex" role="search">
@@ -33,6 +35,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                 </tr>
             </thead>
             <thead class="table-light">
@@ -40,6 +43,7 @@
                 <th>Prénom</th>
                 <th>Âge</th>
                 <th>Ceinture</th>
+                <th></th>
             </thead>
             <tbody>
             {% for adherent in adherents %}
@@ -58,9 +62,30 @@
                     {% else %}
                         <td><img src="{{ asset('BJJ_BlackBelt.svg') }}" alt="ceinture noire" width="64px" height="30px"></td>
                     {% endif%}
+                    <td><button class="btn btn-outline-danger btn-sm lienSupprimer" data-bs-toggle="modal"
+                           data-bs-target="#modalSupprimerAdherent-{{ adherent.id }}">Supprimer</button></td>
                 </tr>
+                {#        Modal     #}
+                <div class="modal fade" tabindex="-1" id="modalSupprimerAdherent-{{ adherent.id }}" aria-labelledby="modal-title" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" >
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Supprimer un adhérent</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Souhaitez-vous vraiment supprimer cet adhérent ({{ adherent.prenom }} {{ adherent.nom }}) ?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Fermer</button>
+                                <a href="{{ path('app_supprimer_adherent', {'id': adherent.id}) }}" class="btn btn-danger">Supprimer l'adhérent</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
             </tbody>
         </table>
+
     </body>
 {% endblock %}

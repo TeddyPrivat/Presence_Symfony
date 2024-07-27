@@ -16,6 +16,14 @@ class SeanceRepository extends ServiceEntityRepository
         parent::__construct($registry, Seance::class);
     }
 
+    public function findAllOrderedByDateDesc():array
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.date', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Seance[] Returns an array of Seance objects
 //     */

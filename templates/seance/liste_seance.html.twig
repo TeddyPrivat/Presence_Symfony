@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block title %}Liste des séances{% endblock %}
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('CSS/liste_seance.css') }}">{% endblock %}
+
+{% block body %}
+    <body class="bg-dark">
+    {%  for label,messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}" style="text-align: center">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <h1>Historique des séances</h1>
+        <table class="table table-dark table-custom">
+            <thead class="table-light">
+                <th class="placerAuMilieu">Date de la séance</th>
+                <th class="placerAuMilieu">Nombre d'adhérents présents</th>
+            </thead>
+            <tbody>
+                {% for seance in seances %}
+                    <tr>
+                        <td class="placerAuMilieu"><a href="{{ path('details_seance', {'id': seance.id}) }}">{{ seance.date |  format_datetime('full', 'short', locale='fr')}}</a></td>
+                        <td class="placerAuMilieu">{{ seance.adherents.count }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+{% endblock %}

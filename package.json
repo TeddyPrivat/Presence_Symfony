@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@eonasdan/tempus-dominus": "^6.9.9"
+    "@eonasdan/tempus-dominus": "^6.9.9",
+    "@popperjs/core": "^2.11.8"
   }
 }

@@ -45,7 +45,7 @@ class AdherentRepository extends ServiceEntityRepository
     {
         $em = $this->getEntityManager();
         $query = $em->createQuery('
-            SELECT a.nom, a.prenom, a.age, a.ceinture
+            SELECT a.nom, a.prenom, a.age, a.ceinture, a.id
             FROM App\Entity\Adherent a
             WHERE(
                 a.nom LIKE :terme

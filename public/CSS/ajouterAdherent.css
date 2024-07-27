@@ -2,13 +2,8 @@ label{
     color: white;
 }
 #ajout_adherent{
-    margin-top: 4em;
     width: 50%;
-    margin-left: 25%;
-}
-.btn{
-    margin-top: 2em;
-    margin-left: 43%;
+    margin: 0 auto;
 }
 .titre{
     text-align: center;

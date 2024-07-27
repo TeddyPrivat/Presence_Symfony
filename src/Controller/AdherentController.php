@@ -42,4 +42,14 @@ class AdherentController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    #[Route('/supprimerAdherent/{id}', name:'app_supprimer_adherent')]
+    public function supprimerAdherent(int $id, EntityManagerInterface $em, AdherentRepository $ar):Response
+    {
+        $adherent = $ar->find($id);
+        $em->remove($adherent);
+        $em->flush();
+        $this->addFlash('success', 'L\'adhérent a bien été supprimé.');
+        return $this->redirectToRoute('app_liste');
+    }
 }

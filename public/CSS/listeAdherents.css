@@ -7,10 +7,6 @@
     text-align: center;
     color:white;
 }
-.btn-ajout{
-    margin-left:43%;
-    margin-top: 1em;
-}
 nav{
     margin-top: 2em;
     width: 50%;
@@ -25,4 +21,12 @@ nav{
 }
 .container-fluid{
     margin-top: 1em;
+}
+.lienSupprimer{
+    text-decoration: none;
+    color: white;
+}
+.modal-content{
+    background-color: #343a40;
+    color:white;
 }

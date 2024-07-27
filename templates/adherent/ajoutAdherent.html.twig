@@ -4,11 +4,18 @@
 
 {% block body %}
     <body class="bg-dark">
-    <h1 class="titre">Ajout d'un adhérent</h1>
-    <h3><a href="{{ path('app_liste') }}" class="btn btn-primary btn-lg">Liste des adhérents</a></h3>
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button type="submit" class="btn btn-primary btn-lg">Ajouter un adhérent</button>
-        {{ form_end(form) }}
+        <h1 class="titre">Ajout d'un adhérent</h1>
+        <div class="d-flex justify-content-center my-5">
+            <a href="{{ path('app_liste') }}" class="btn btn-primary btn-lg">Liste des adhérents</a>
+        </div>
+        <div class="container my-4 justify-content-center">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <div class="d-flex justify-content-center my-5">
+                <button type="submit" class="btn btn-primary btn-lg">Ajouter un adhérent</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+
     </body>
 {% endblock %}
