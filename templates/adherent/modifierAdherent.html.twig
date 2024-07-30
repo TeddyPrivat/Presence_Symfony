@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('CSS/modifierAdherent.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat:wght@100;400;800&family=Tilt+Neon&display=swap" rel="stylesheet">
 {% endblock %}
 {% block title %}Promotion de {{ adherent.prenom }} {{ adherent.nom }}{% endblock %}
 
@@ -10,8 +9,14 @@
         <h1 class="adherent">{{ adherent.prenom | upper }} {{ adherent.nom | upper}}</h1>
 
         {{ form_start(formPromotion) }}
-        {{ form_row(formPromotion.nom) }}
-        {{ form_row(formPromotion.prenom) }}
+        <div class="mb-3">
+            {{ form_label(formPromotion.prenom) }}
+            {{ form_widget(formPromotion.prenom) }}
+        </div>
+        <div class="mb-3">
+            {{ form_label(formPromotion.nom) }}
+            {{ form_widget(formPromotion.nom) }}
+        </div>
         <div class="mb-3">
             <label for="datetimepicker1Input" class="form-label">{{ form_label(formPromotion.date_de_naissance) }}</label>
             <div class="input-group" id="datetimepicker1" data-td-target-input="nearest" data-td-target-toggle="nearest">
@@ -21,7 +26,10 @@
                 </span>
             </div>
         </div>
-        {{ form_row(formPromotion.ceinture) }}
+        <div class="mb-3">
+            {{ form_label(formPromotion.ceinture) }}
+            {{ form_widget(formPromotion.ceinture) }}
+        </div>
         <div class="d-flex justify-content-center my-4">
             <button type="submit" class="btn btn-lg btn-primary">Mettre à jour</button>
         </div>

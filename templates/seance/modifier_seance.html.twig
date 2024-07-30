@@ -1,4 +1,77 @@
 {% extends 'base.html.twig' %}
-{% block title %}Modifier une séance{% endblock %}
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('CSS/creationSeance.css') }}"> {% endblock %}
+{% block title %}Création d'une séance{% endblock %}
 
-{% block body %}{% include 'seance/index.html.twig' %}{% endblock %}
+{% block body %}
+    <body class="bg-dark">
+    <div>
+        {{ form_start(formSeance) }}
+        <div>
+            <div>
+                <div class="col-sm-6">
+                    <label for="datetimepicker1Input" class="form-label">{{ form_label(formSeance.date) }}</label>
+                    <div class="input-group" id="datetimepicker1" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                        {{ form_widget(formSeance.date, {'attr': {'id': 'datetimepicker1Input'}}) }}
+                        <span class="input-group-text" data-td-target="#datetimepicker1" data-td-toggle="datetimepicker">
+                            <i class="bi bi-calendar-fill"></i>
+                        </span>
+                    </div>
+                    {{ form_errors(formSeance.date) }}
+                </div>
+            </div>
+            <div>
+                {{ form_label(formSeance.adherents) }}
+                {{ form_widget(formSeance.adherents) }}
+            </div>
+            <button type="submit" class="btn btn-lg btn-primary">Modifier la séance</button>
+        </div>
+        {{ form_end(formSeance) }}
+    </div>
+    </body>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const datetimepicker1 = new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
+                localization: {
+                    locale: 'fr-FR',
+                    format: 'dd/MM/yyyy HH:mm',
+                },
+                display: {
+                    components: {
+                        calendar: true,
+                        date: true,
+                        month: true,
+                        year: true,
+                        decades: true,
+                        clock: true,
+                        hours: true,
+                        minutes: true,
+                        seconds: false
+                    },
+                    buttons: {
+                        today: true,
+                        clear: true,
+                        close: true
+                    },
+                    icons: {
+                        time: 'bi bi-clock',
+                        date: 'bi bi-calendar-week',
+                        up: 'bi bi-arrow-up',
+                        down: 'bi bi-arrow-down',
+                        previous: 'bi bi-chevron-left',
+                        next: 'bi bi-chevron-right',
+                        today: 'bi bi-calendar-check',
+                        clear: 'bi bi-trash',
+                        close: 'bi bi-times'
+                    },
+                },
+                stepping: 5 // Permet d'augmenter ou de baisser de 5 minutes les minutes de la séance
+            });
+        });
+    </script>
+{% endblock %}
+

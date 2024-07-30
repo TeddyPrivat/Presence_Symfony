@@ -6,7 +6,9 @@ use App\Entity\Adherent;
 use App\Form\AjoutAdherentType;
 use App\Form\PromotionType;
 use App\Repository\AdherentRepository;
+use App\Services\Age;
 use App\Services\CalculAge;
+use App\Services\MAJAge;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,8 +18,9 @@ use Symfony\Component\Routing\Attribute\Route;
 class AdherentController extends AbstractController
 {
     #[Route('/liste', name: 'app_liste')]
-    public function index(AdherentRepository $ar, Request $requete): Response
+    public function index(AdherentRepository $ar, Request $requete, MAJAge $ma, EntityManagerInterface $em, CalculAge $ca): Response
     {
+        $ma->majAge($ar, $em, $ca);
         $rechercheRecherche = $requete->query->get('recherche');
         $nbRecherche = $requete->query->get('recherche');
         $recherche = $ar->rechercheListe($rechercheRecherche);
@@ -39,7 +42,7 @@ class AdherentController extends AbstractController
             dump($adherent->getAge());
             $em->persist($adherent);
             $em->flush();
-            $this->addFlash('success', 'L\'adhérent '.$adherent->getPrenom().' '.$adherent->getNom().' a bien été ajouté.');
+            $this->addFlash('success', 'L\'adhérent(e) '.$adherent->getPrenom().' '.$adherent->getNom().' a bien été ajouté(e).');
             return $this->redirectToRoute('app_liste');
         }
         return $this->render('adherent/ajoutAdherent.html.twig',[
@@ -53,7 +56,7 @@ class AdherentController extends AbstractController
         $adherent = $ar->find($id);
         $em->remove($adherent);
         $em->flush();
-        $this->addFlash('success', 'L\'adhérent a bien été supprimé.');
+        $this->addFlash('success', 'L\'adhérent(e) a bien été supprimé(e).');
         return $this->redirectToRoute('app_liste');
     }
 
@@ -66,8 +69,7 @@ class AdherentController extends AbstractController
         if($formPromotion->isSubmitted() && $formPromotion->isValid()){
             $em->persist($adherent);
             $em->flush();
-            $this->addFlash('success', $adherent->getPrenom().' '.$adherent->getNom(). ' est passé(e) ceinture '.
-            $adherent->getCeinture().'.');
+            $this->addFlash('success', $adherent->getPrenom().' '.$adherent->getNom(). ' a été modifié(e).');
             return $this->redirectToRoute('app_liste');
         }
         return $this->render('adherent/modifierAdherent.html.twig',[

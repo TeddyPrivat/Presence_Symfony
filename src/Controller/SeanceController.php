@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Seance;
 use App\Form\SeanceType;
+use App\Repository\AdherentRepository;
 use App\Repository\SeanceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use IntlDateFormatter;
@@ -15,16 +16,13 @@ use Symfony\Component\Routing\Attribute\Route;
 class SeanceController extends AbstractController
 {
     #[Route('/creerSeance', name: 'creer_seance')]
-    public function creerSeance(Request $request, EntityManagerInterface $em):Response
+    public function creerSeance(Request $request, EntityManagerInterface $em, AdherentRepository $ar):Response
     {
         $seance = new Seance();
+        $adherents = $ar->findAll();
         $formSeance = $this->createForm(SeanceType::class, $seance);
         $formSeance->handleRequest($request);
-        if($formSeance->isSubmitted()){
-            dump($seance->getDate());
-        }
         if($formSeance->isSubmitted() && $formSeance->isValid()){
-
             $em->persist($seance);
             $em->flush();
             $this->addFlash('success', 'La séance a bien été créée.');
@@ -32,6 +30,7 @@ class SeanceController extends AbstractController
         }
         return $this->render('seance/index.html.twig', [
             'formSeance' => $formSeance->createView(),
+            'adherents' => $adherents
         ]);
     }
 

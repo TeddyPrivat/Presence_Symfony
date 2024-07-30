@@ -4,9 +4,9 @@
 
 {% block body %}
     <body class="bg-dark">
-        <div>
+        <div class="container my-4 justify-content-center">
             {{ form_start(formSeance) }}
-            <div>
+            <div class="mb-3">
                 <div>
                     <div class="col-sm-6">
                         <label for="datetimepicker1Input" class="form-label">{{ form_label(formSeance.date) }}</label>
@@ -19,13 +19,19 @@
                         {{ form_errors(formSeance.date) }}
                     </div>
                 </div>
-                <div>
-                    {{ form_label(formSeance.adherents) }}
-                    {{ form_widget(formSeance.adherents) }}
+                <input class="form-control" type="text" aria-label="Recherche" placeholder="Nom, Prénom..." id="searchInput">
+                <div id="adherents-list">
+                    {% for adherent in adherents %}
+                        <div class="adherent-checkbox" data-id="{{ adherent.id }}" data-nom="{{ adherent.nom }}" data-prenom="{{ adherent.prenom }}">
+                            {{ form_widget(formSeance.adherents[adherent.id]) }}
+                            {{ form_label(formSeance.adherents[adherent.id]) }}
+                        </div>
+                    {% endfor %}
                 </div>
-                <button type="submit" class="btn btn-primary">Ajouter</button>
+                <button type="submit" class="btn btn-lg btn-primary">Créer la séance</button>
             </div>
             {{ form_end(formSeance) }}
+
         </div>
     </body>
 
@@ -33,7 +39,6 @@
 
 {% block javascripts %}
     <script>
-
         document.addEventListener('DOMContentLoaded', function () {
             const datetimepicker1 = new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
                 localization: {
@@ -71,6 +76,26 @@
                 },
                 stepping: 5 // Permet d'augmenter ou de baisser de 5 minutes les minutes de la séance
             });
+            const searchInput = document.getElementById('searchInput');
+            const adherentsList = document.getElementById('adherents-list').children;
+
+            searchInput.addEventListener('keyup', function (){
+               const valeurInput = searchInput.value.trim().toLowerCase();
+               console.log(valeurInput);
+               Array.from(adherentsList).forEach(function(element){
+                   const nom = element.getAttribute('data-nom').toLowerCase();
+                   const prenom = element.getAttribute('data-prenom').toLowerCase();
+                   const text = (prenom + ' ' + nom).trim().toLowerCase();
+
+                   if(text.includes(valeurInput)){
+                       element.style.display = "";
+                   }else{
+                       element.style.display = "none";
+                   }
+               });
+            });
         });
+
+
     </script>
 {% endblock %}
