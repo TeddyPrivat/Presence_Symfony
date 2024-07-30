@@ -85,9 +85,9 @@
                Array.from(adherentsList).forEach(function(element){
                    const nom = element.getAttribute('data-nom').toLowerCase();
                    const prenom = element.getAttribute('data-prenom').toLowerCase();
-                   const text = (prenom + ' ' + nom).trim().toLowerCase();
+                   const match = [nom,prenom].find(val => val.trim().toLowerCase().includes(valeurInput));
 
-                   if(text.includes(valeurInput)){
+                   if(match){
                        element.style.display = "";
                    }else{
                        element.style.display = "none";
