@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('CSS/modifierAdherent.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat:wght@100;400;800&family=Tilt+Neon&display=swap" rel="stylesheet">
+{% endblock %}
+{% block title %}Promotion de {{ adherent.prenom }} {{ adherent.nom }}{% endblock %}
+
+{% block body %}
+    <body class="bg-dark">
+        <h1 class="adherent">{{ adherent.prenom | upper }} {{ adherent.nom | upper}}</h1>
+        {{ form_start(formPromotion) }}
+        {{ form_widget(formPromotion) }}
+        <div class="d-flex justify-content-center my-4">
+            <button type="submit" class="btn btn-lg btn-primary">Promouvoir</button>
+        </div>
+        {{ form_end(formPromotion) }}
+
+    </body>
+{% endblock %}

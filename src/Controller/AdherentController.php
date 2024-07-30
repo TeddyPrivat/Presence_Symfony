@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Adherent;
 use App\Form\AjoutAdherentType;
+use App\Form\PromotionType;
 use App\Repository\AdherentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -51,5 +52,25 @@ class AdherentController extends AbstractController
         $em->flush();
         $this->addFlash('success', 'L\'adhérent a bien été supprimé.');
         return $this->redirectToRoute('app_liste');
+    }
+
+    #[Route('/modifierAdherent/{id}', name: 'app_modifier_adherent')]
+    public function promotionAdherent(int $id, EntityManagerInterface $em, AdherentRepository $ar, Request $request):Response
+    {
+        $adherent = $ar->find($id);
+        $formPromotion = $this->createForm(AjoutAdherentType::class, $adherent);
+        $formPromotion->handleRequest($request);
+        if($formPromotion->isSubmitted() && $formPromotion->isValid()){
+            $em->persist($adherent);
+            $em->flush();
+            $this->addFlash('success', $adherent->getPrenom().' '.$adherent->getNom(). ' est passé(e) ceinture '.
+            $adherent->getCeinture().'.');
+            return $this->redirectToRoute('app_liste');
+        }
+        return $this->render('adherent/modifierAdherent.html.twig',[
+                'formPromotion' => $formPromotion->createView(),
+                'adherent' => $adherent
+            ]);
+
     }
 }

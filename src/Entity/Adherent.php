@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AdherentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AdherentRepository::class)]
@@ -32,6 +33,9 @@ class Adherent
      */
     #[ORM\ManyToMany(targetEntity: Seance::class, mappedBy: 'adherents')]
     private Collection $seances;
+
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    private ?\DateTimeImmutable $date_de_naissance = null;
 
     public function __construct()
     {
@@ -114,6 +118,18 @@ class Adherent
         if ($this->seances->removeElement($seance)) {
             $seance->removeAdherent($this);
         }
+
+        return $this;
+    }
+
+    public function getDateDeNaissance(): ?\DateTimeImmutable
+    {
+        return $this->date_de_naissance;
+    }
+
+    public function setDateDeNaissance(\DateTimeImmutable $date_de_naissance): static
+    {
+        $this->date_de_naissance = $date_de_naissance;
 
         return $this;
     }

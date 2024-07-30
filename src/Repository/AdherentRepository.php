@@ -51,7 +51,7 @@ class AdherentRepository extends ServiceEntityRepository
                 a.nom LIKE :terme
                 OR a.prenom LIKE :terme
                 OR a.age = :rechercheAge
-                OR a.ceinture = :ceinture
+                OR a.ceinture LIKE :ceinture
             )
         ')
         ->setParameter('terme', '%'.$recherche.'%')

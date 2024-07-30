@@ -48,8 +48,8 @@
             <tbody>
             {% for adherent in adherents %}
                 <tr>
-                    <td>{{ adherent.prenom }}</td>
-                    <td>{{ adherent.nom }}</td>
+                    <td><a class="lienPrenomNom" href="{{ path('app_modifier_adherent', {'id': adherent.id }) }}" >{{ adherent.prenom }}</a></td>
+                    <td><a class="lienPrenomNom" href="{{ path('app_modifier_adherent', {'id': adherent.id }) }}" >{{ adherent.nom }}</a></td>
                     <td>{{ adherent.age }}</td>
                     {% if adherent.ceinture is same as 'Blanche' %}
                         <td><img src="{{ asset('BJJ_White_Belt.svg') }}" alt="ceinture blanche" width="64px" height="30px"></td>
