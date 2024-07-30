@@ -6,6 +6,7 @@ use App\Entity\Adherent;
 use App\Form\AjoutAdherentType;
 use App\Form\PromotionType;
 use App\Repository\AdherentRepository;
+use App\Services\CalculAge;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,15 +29,17 @@ class AdherentController extends AbstractController
     }
 
     #[Route('/ajoutAdherent', name: 'app_ajouter_adherent')]
-    public function creerAdherent(Request $request, EntityManagerInterface $em):Response
+    public function creerAdherent(Request $request, EntityManagerInterface $em, CalculAge $ca):Response
     {
         $adherent = new Adherent();
         $form = $this->createForm(AjoutAdherentType::class, $adherent);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
+            $adherent->setAge($ca->calculAge($adherent->getDateDeNaissance()));
+            dump($adherent->getAge());
             $em->persist($adherent);
             $em->flush();
-            $this->addFlash('success', 'L\'adhérent a bien été ajouté.');
+            $this->addFlash('success', 'L\'adhérent '.$adherent->getPrenom().' '.$adherent->getNom().' a bien été ajouté.');
             return $this->redirectToRoute('app_liste');
         }
         return $this->render('adherent/ajoutAdherent.html.twig',[

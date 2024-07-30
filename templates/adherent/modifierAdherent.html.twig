@@ -8,12 +8,65 @@
 {% block body %}
     <body class="bg-dark">
         <h1 class="adherent">{{ adherent.prenom | upper }} {{ adherent.nom | upper}}</h1>
+
         {{ form_start(formPromotion) }}
-        {{ form_widget(formPromotion) }}
+        {{ form_row(formPromotion.nom) }}
+        {{ form_row(formPromotion.prenom) }}
+        <div class="mb-3">
+            <label for="datetimepicker1Input" class="form-label">{{ form_label(formPromotion.date_de_naissance) }}</label>
+            <div class="input-group" id="datetimepicker1" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                {{ form_widget(formPromotion.date_de_naissance, {'attr': {'id': 'datetimepicker1Input'}}) }}
+                <span class="input-group-text" data-td-target="#datetimepicker1" data-td-toggle="datetimepicker">
+                    <i class="bi bi-calendar-fill"></i>
+                </span>
+            </div>
+        </div>
+        {{ form_row(formPromotion.ceinture) }}
         <div class="d-flex justify-content-center my-4">
-            <button type="submit" class="btn btn-lg btn-primary">Promouvoir</button>
+            <button type="submit" class="btn btn-lg btn-primary">Mettre à jour</button>
         </div>
         {{ form_end(formPromotion) }}
-
+        {% block javascripts %}
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const datetimepicker1 = new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
+                        localization: {
+                            locale: 'fr-FR',
+                            format: 'dd/MM/yyyy',
+                        },
+                        display: {
+                            components: {
+                                calendar: true,
+                                date: true,
+                                month: true,
+                                year: true,
+                                decades: true,
+                                clock: true,
+                                hours: true,
+                                minutes: true,
+                                seconds: false
+                            },
+                            buttons: {
+                                today: true,
+                                clear: true,
+                                close: true
+                            },
+                            icons: {
+                                time: 'bi bi-clock',
+                                date: 'bi bi-calendar-week',
+                                up: 'bi bi-arrow-up',
+                                down: 'bi bi-arrow-down',
+                                previous: 'bi bi-chevron-left',
+                                next: 'bi bi-chevron-right',
+                                today: 'bi bi-calendar-check',
+                                clear: 'bi bi-trash',
+                                close: 'bi bi-times'
+                            },
+                        },
+                        stepping: 5 // Permet d'augmenter ou de baisser de 5 minutes les minutes de la séance
+                    });
+                });
+            </script>
+        {% endblock %}
     </body>
 {% endblock %}

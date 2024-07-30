@@ -1,12 +1,12 @@
 label{
     color: white;
 }
-#ajout_adherent{
-    width: 50%;
-    margin: 0 auto;
-}
 .titre{
     text-align: center;
     color: white;
     margin-top: 1em;
+}
+.mb-3{
+    width: 50%;
+    margin: 0 auto;
 }
