@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('CSS/accueil.css') }}">{% endblock %}
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <body class="bg-dark">
+    <h1 id="accueil">Accueil Présences</h1>
+        <div class="boutonsAccueil">
+            <a href="{{ path('app_liste') }}" class="btn btn-lg btn-outline-primary" id="boutonAdherents">Adhérents</a>
+            <a href="{{ path('liste_seance') }}" class="btn btn-lg btn-outline-primary" id="boutonSeances">Séances</a>
+        </div>
+    </body>
+{% endblock %}

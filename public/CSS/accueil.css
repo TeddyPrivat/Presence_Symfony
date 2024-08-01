@@ -1,0 +1,35 @@
+.boutonsAccueil{
+    display: flex;
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    height: 80vh; /* Prend toute la hauteur de la fenêtre */
+    font-family: "Kanit", sans-serif;
+}
+
+a{
+    margin: 0 20px;
+
+}
+.boutonsAccueil a{
+    font-size: 25px; /* Taille du texte augmentée */
+}
+
+#boutonAdherents{
+    height: 20em;
+    padding-top: 9em;
+    width: 25em;
+}
+
+#boutonSeances{
+    height: 20em;
+    padding-top: 9em;
+    width: 25em;
+}
+#accueil{
+    color: white;
+    text-align: center;
+    font-family: "Kanit", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    margin-top: 1em;
+}
