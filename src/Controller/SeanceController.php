@@ -63,8 +63,9 @@ class SeanceController extends AbstractController
     }
 
     #[Route('/modifierSeance/{id}', name:'modifier_seance')]
-    public function modifierSeance(int $id, EntityManagerInterface $em, SeanceRepository $sr,  Request $request):Response
+    public function modifierSeance(int $id, EntityManagerInterface $em, SeanceRepository $sr,  Request $request, AdherentRepository $ar):Response
     {
+        $adherents = $ar->findAll();
         $seanceAModifier = $sr->find($id);
         $form = $this->createForm(SeanceType::class, $seanceAModifier);
         $form->handleRequest($request);
@@ -76,7 +77,8 @@ class SeanceController extends AbstractController
         }
         return $this->render('seance/modifier_seance.html.twig',[
             'seanceAModifier' => $seanceAModifier,
-            'formSeance' => $form->createView()
+            'formSeance' => $form->createView(),
+            'adherents' => $adherents
         ]);
     }
 }

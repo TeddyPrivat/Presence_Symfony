@@ -4,12 +4,12 @@
 
 {% block body %}
     <body class="bg-dark">
-    <div>
+    <div class="container my-4 justify-content-center">
         {{ form_start(formSeance) }}
-        <div>
+        <div class="mb-3">
             <div>
-                <div class="col-sm-6">
-                    <label for="datetimepicker1Input" class="form-label">{{ form_label(formSeance.date) }}</label>
+                <div>
+                    <label for="datetimepicker1Input" class="form-label" id="labelDate">{{ form_label(formSeance.date) }}</label>
                     <div class="input-group" id="datetimepicker1" data-td-target-input="nearest" data-td-target-toggle="nearest">
                         {{ form_widget(formSeance.date, {'attr': {'id': 'datetimepicker1Input'}}) }}
                         <span class="input-group-text" data-td-target="#datetimepicker1" data-td-toggle="datetimepicker">
@@ -19,11 +19,20 @@
                     {{ form_errors(formSeance.date) }}
                 </div>
             </div>
-            <div>
-                {{ form_label(formSeance.adherents) }}
-                {{ form_widget(formSeance.adherents) }}
+            <label for="searchInput" id="labelSearchInput">Recherche par nom et prénom</label>
+            <input class="form-control" type="text" aria-label="Recherche" placeholder="Nom, Prénom..." id="searchInput">
+            <label for="adherents-list" id="labelAdherentsList">Adhérents</label>
+            <ul class="list-group" id="adherents-list">
+                {% for adherent in adherents %}
+                    <li class="adherent-checkbox list-group-item" data-id="{{ adherent.id }}" data-nom="{{ adherent.nom }}" data-prenom="{{ adherent.prenom }}">
+                        {{ form_widget(formSeance.adherents[adherent.id]) }}
+                        {{ form_label(formSeance.adherents[adherent.id]) }}
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="d-flex justify-content-center my-5">
+                <button type="submit" class="btn btn-lg btn-primary">Modifier la séance</button>
             </div>
-            <button type="submit" class="btn btn-lg btn-primary">Modifier la séance</button>
         </div>
         {{ form_end(formSeance) }}
     </div>
@@ -70,6 +79,24 @@
                     },
                 },
                 stepping: 5 // Permet d'augmenter ou de baisser de 5 minutes les minutes de la séance
+            });
+            const searchInput = document.getElementById('searchInput');
+            const adherentsList = document.getElementById('adherents-list').children;
+
+            searchInput.addEventListener('keyup', function (){
+                const valeurInput = searchInput.value.trim().toLowerCase();
+                console.log(valeurInput);
+                Array.from(adherentsList).forEach(function(element){
+                    const nom = element.getAttribute('data-nom').toLowerCase();
+                    const prenom = element.getAttribute('data-prenom').toLowerCase();
+                    const match = [nom,prenom].find(val => val.trim().toLowerCase().includes(valeurInput));
+
+                    if(match){
+                        element.style.display = "";
+                    }else{
+                        element.style.display = "none";
+                    }
+                });
             });
         });
     </script>

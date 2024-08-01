@@ -22,3 +22,6 @@ a{
 td,th, .btn{
     font-family: "Kanit", sans-serif;
 }
+#boutonWarning{
+    margin-left: 1em;
+}

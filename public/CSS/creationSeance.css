@@ -1,6 +1,42 @@
 label{
     color:white;
+    font-family: "Kanit", sans-serif;
+    font-size: large;
 }
-.mb3{
-    margin : 0 auto;
+.mb-3{
+    width: 50%;
+    margin: 0 auto;
+}
+#inputDateTime{
+    width: 100%;
+}
+#adherents-list{
+    text-align: center;
+    margin-top: 1em;
+    max-height: 200px;
+    overflow-y: scroll;
+    padding-right: 1px;
+    box-sizing: border-box;
+
+}
+.form-check-label{
+    color:whitesmoke;
+}
+#labelSearchInput{
+    margin-top: 1em;
+}
+#labelAdherentsList{
+    margin-top: 1em;
+}
+.btn{
+    font-family: "Kanit", sans-serif;
+}
+#searchInput{
+    margin-top: 1em;
+}
+.adherent-checkbox{
+    background-color: #212529;
+}
+#labelDate{
+    margin-top: 1em;
 }

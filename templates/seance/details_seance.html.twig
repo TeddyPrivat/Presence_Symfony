@@ -33,6 +33,7 @@
         </table>
         <div class="d-flex justify-content-center my-4">
             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#test-modal">Supprimer la séance</button>
+            <a href="{{ path('modifier_seance', {'id': seance.id}) }}" class="btn btn-warning" id="boutonWarning">Modifier la séance</a>
         </div>
 
         <div class="modal fade" tabindex="-1" id="test-modal" aria-labelledby="modal-title" aria-hidden="true">
