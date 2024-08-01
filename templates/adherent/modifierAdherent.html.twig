@@ -6,6 +6,9 @@
 
 {% block body %}
     <body class="bg-dark">
+        <div class="d-flex justify-content-center my-4">
+            <a href="{{ path('app_liste') }}" class="btn btn-lg btn-outline-primary" id="boutonListeAdherents">Liste d'adhérents</a>
+        </div>
         <h1 class="adherent">{{ adherent.prenom | upper }} {{ adherent.nom | upper}}</h1>
 
         {{ form_start(formPromotion) }}
